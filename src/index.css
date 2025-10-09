@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@theme {
+  --color-primary: #00d991;
+  --color-dark: #171923;
+  --color-light: #fff;
+  --color-body: #1d1e28;
+}
+@layer components {
+  .container {
+    @apply mx-auto;
+    padding: 1.25rem;
+  }
+}
