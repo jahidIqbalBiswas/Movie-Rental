@@ -18,9 +18,9 @@ This project allows users to explore, view details, and manage a rental cart for
 
 ## 🧱 Project Structure
 
+'''
 Movie-Rental/
 ├── public/
-
 ├── src/
 │ ├── assets/
 │ ├── cine/
@@ -47,7 +47,7 @@ Movie-Rental/
 ├── package.json
 ├── vite.config.js
 └── README.md
-
+'''
 ---
 
 ## 🧠 Tech Stack
