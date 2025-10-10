@@ -1,18 +1,22 @@
-import { useState,useContext } from "react";
+import { useContext, useState } from "react";
 import TagIcon from "../assets/tag.svg";
+import { MovieContext } from "../context";
 import { getImgUrl } from "../utils/cine-utils";
 import MovieDetailsModal from "./MovieDetailsModal";
 import Rating from "./Rating";
-import { MovieContext } from "../context";
 export default function MovieCard({ movie }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const {cartData, setCartData} = useContext(MovieContext)
+  const { cartData, setCartData } = useContext(MovieContext);
   function handleAddToCart(e, movie) {
-    e.stopPropagation()
-    const found = cartData.find(item => item.id === movie.id);
-    console.log(found);
-    
+    e.stopPropagation();
+    const found = cartData.find((item) => item.id === movie.id);
+    if (!found) {
+      setCartData([...cartData, movie]);
+      showModal && setShowModal(false);
+    } else {
+      console.error(`The movie ${movie.title} is already added to the cart!`);
+    }
   }
   function handleOpenModal(movie) {
     setSelectedMovie(movie);
@@ -25,7 +29,11 @@ export default function MovieCard({ movie }) {
   return (
     <>
       {showModal && (
-        <MovieDetailsModal movie={selectedMovie} onClose={handleCloseModal} />
+        <MovieDetailsModal
+          movie={selectedMovie}
+          onClose={handleCloseModal}
+          onCartAdd={handleAddToCart}
+        />
       )}
       <figure
         onClick={() => handleOpenModal(movie)}
@@ -45,7 +53,7 @@ export default function MovieCard({ movie }) {
           <a
             className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
             href="#"
-            onClick={(e) => handleAddToCart(e,movie)}
+            onClick={(e) => handleAddToCart(e, movie)}
           >
             <img src={TagIcon} alt="" />
             <span>${movie.price} | Add to Cart</span>

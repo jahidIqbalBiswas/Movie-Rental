@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Moon from "./assets/icons/moon.svg";
+import Sun from "./assets/icons/sun.svg";
 import Logo from "./assets/logo.svg";
 import Ring from "./assets/ring.svg";
 import Cart from "./assets/shopping-cart.svg";
 import CartDetails from "./cine/CartDetails";
+import { MovieContext, ThemeContext } from "./context/";
 export default function Header() {
   const [showCartDetails, setShowCartDetails] = useState(false);
+  const { cartData } = useContext(MovieContext);
+  const { darkMode, setDarkMode } = useContext(ThemeContext);
   return (
     <header>
-      {showCartDetails && <CartDetails onClose={() => setShowCartDetails(false)} />}
+      {showCartDetails && (
+        <CartDetails onClose={() => setShowCartDetails(false)} />
+      )}
       <nav className="container flex items-center justify-between space-x-10 py-6">
         <a href="index.html">
           <img src={Logo} width="139" height="26" alt="logo" />
@@ -27,8 +33,14 @@ export default function Header() {
             <a
               className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block"
               href="#"
+              onClick={() => setDarkMode((darkMode) => !darkMode)}
             >
-              <img src={Moon} width="24" height="24" alt="" />
+              <img
+                src={darkMode ? Sun : Moon}
+                width="24"
+                height="24"
+                alt="Dark/Light"
+              />
             </a>
           </li>
           <li>
@@ -37,6 +49,11 @@ export default function Header() {
               href="#"
               onClick={() => setShowCartDetails(true)}
             >
+              {cartData.length > 0 && (
+                <span className="rounded-full absolute top-[-12px] left-[-15px] bg-[#04c652] text-white text-center p-[2px] w-[25px] h-[25px] text-sm">
+                  {cartData.length}
+                </span>
+              )}
               <img src={Cart} width="24" height="24" alt="" />
             </a>
           </li>
