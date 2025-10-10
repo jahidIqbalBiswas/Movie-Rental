@@ -20,6 +20,7 @@ This project allows users to explore, view details, and manage a rental cart for
 
 Movie-Rental/
 ├── public/
+
 ├── src/
 │ ├── assets/
 │ ├── cine/
