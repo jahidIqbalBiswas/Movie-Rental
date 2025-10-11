@@ -1,12 +1,17 @@
 import { useContext } from "react";
+import { toast } from "react-toastify";
 import DeleteIcon from "../assets/delete.svg";
 import CheckOutIcon from "../assets/icons/checkout.svg";
 import { MovieContext } from "../context";
 import { getImgUrl } from "../utils/cine-utils";
 export default function CartDetails({ onClose }) {
-  const { cartData, setCartData } = useContext(MovieContext);
+  const { state, dispatch } = useContext(MovieContext);
   function handleRemoveFromCart(movie) {
-    setCartData(cartData.filter((item) => item.id !== movie.id));
+    dispatch({
+      type: "REMOVE_FROM_CART",
+      payload: movie,
+    });
+    toast.success(`The movie ${movie.title} has been removed from cart.`);
   }
   return (
     <div className="fixed top-0 left-0 w-screen h-screen z-50 bg-black/60 backdrop-blur-sm">
@@ -16,10 +21,10 @@ export default function CartDetails({ onClose }) {
             Your Carts
           </h2>
           <div className="space-y-8 lg:space-y-12 max-h-[450px] overflow-auto mb-10 lg:mb-14">
-            {cartData.length === 0 ? (
+            {state.cartData.length === 0 ? (
               <p className="text-md text-gray-600">The cart is empty.</p>
             ) : (
-              cartData.map((movie) => (
+              state.cartData.map((movie) => (
                 <div key={movie.id} className="grid grid-cols-[1fr_auto] gap-4">
                   <div className="flex items-center gap-4">
                     <img
