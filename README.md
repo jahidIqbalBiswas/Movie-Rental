@@ -125,6 +125,8 @@ src/reducers/
 🌓 Dark Mode Support
 
 ---
+Live Preview: https://biswas-movie-rental.vercel.app
+---
 
 🧑‍💻 Author
 
